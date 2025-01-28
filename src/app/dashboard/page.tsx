@@ -1,48 +1,52 @@
 "use client";
 
-import { useState } from "react";
-import { createMenu as createMenuService } from "../../services/firebase-config";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../contexts/auth-context";
+import { signOut } from "firebase/auth";
+import { auth } from "@/services/firebase-config";
 
 export default function Dashboard() {
-  const [menuName, setMenuName] = useState("");
-  const [menus, setMenus] = useState<string[]>([]);
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
-  const createMenu = async () => {
-    const newMenuId = await createMenuService(menuName);
-    if (newMenuId) {
-      setMenus([...menus, menuName]);
-      setMenuName("");
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/login");
+    }
+  }, [user, loading, router]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/auth/login");
+    } catch (err) {
+      console.error("Erro ao sair", err);
     }
   };
+
+  if (loading || !user) return <div>Carregando...</div>;
 
   return (
     <div className="p-6">
       <h1 className="text-3xl font-semibold">Dashboard</h1>
-      <div className="mt-6">
-        <input
-          type="text"
-          value={menuName}
-          onChange={(e) => setMenuName(e.target.value)}
-          placeholder="Nome do Cardápio"
-          className="p-2 border rounded"
-        />
-        <button
-          onClick={createMenu}
-          className="ml-4 px-4 py-2 bg-blue-600 text-white rounded"
-        >
-          Criar Cardápio
-        </button>
-      </div>
-      <div className="mt-6">
-        <h2 className="text-xl">Meus Cardápios</h2>
-        <ul>
-          {menus.map((menu, index) => (
-            <li key={index} className="mt-2">
-              {menu}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {user ? (
+        <div>
+          <h1>Bem-vindo ao Dashboard, {user.displayName || "Usuário"}</h1>
+        </div>
+      ) : (
+        <p>
+          Acesso não autorizado. Você precisa estar logado para acessar esta
+          página.
+        </p>
+      )}
+
+      <button
+        onClick={handleLogout}
+        className="py-2 px-4 bg-red-600 text-white rounded"
+      >
+        Sair
+      </button>
     </div>
   );
 }
