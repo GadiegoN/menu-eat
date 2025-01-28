@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -16,4 +16,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export { auth, db };
+const createMenu = async (menuName: string) => {
+  try {
+    const docRef = await addDoc(collection(db, "menus"), {
+      name: menuName,
+      createdAt: new Date(),
+    });
+    console.log("Cardápio criado com ID:", docRef.id);
+    return docRef.id;
+  } catch (e) {
+    console.error("Erro ao criar cardápio: ", e);
+  }
+};
+
+export { auth, db, createMenu };
