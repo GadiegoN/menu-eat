@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../contexts/auth-context";
+import { useAuth } from "../../contexts/auth-context";
 import { signOut } from "firebase/auth";
 import { auth } from "@/services/firebase-config";
 
