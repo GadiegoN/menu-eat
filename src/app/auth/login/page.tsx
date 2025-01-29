@@ -4,6 +4,7 @@ import { useState } from "react";
 import { auth } from "../../../services/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -46,12 +47,7 @@ export default function Login() {
           className="w-full placeholder:text-slate-600 text-slate-950 mb-4 p-2 border rounded"
           required
         />
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded"
-        >
-          Entrar
-        </button>
+        <Button text="Entrar" variant="outline" />
       </form>
     </div>
   );

@@ -1,15 +1,20 @@
+import { Button } from "@/components/ui";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="text-center mt-20">
-      <h1 className="text-3xl font-semibold">Bem-vindo ao QRMenu!</h1>
-      <p className="mt-4">Crie e gerencie seus cardápios online facilmente.</p>
-      <Link href="/dashboard">
-        <button className="mt-6 px-4 py-2 bg-blue-600 text-white rounded">
-          Comece Agora
-        </button>
-      </Link>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground px-4">
+      <h1 className="text-4xl font-bold text-primary">Bem-vindo ao QRMenu!</h1>
+      <p className="mt-4 text-lg text-center max-w-lg">
+        Crie e gerencie seus cardápios online facilmente. Digitalize sua
+        experiência gastronômica com QR codes personalizados.
+      </p>
+      <div className="mt-6 flex gap-4">
+        <Link href="/dashboard">
+          <Button text="Comece Agora" variant="primary" />
+        </Link>
+        <Button text="Saiba Mais" variant="outline" />
+      </div>
     </div>
   );
 }

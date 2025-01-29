@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/auth-context";
 import { signOut } from "firebase/auth";
 import { auth } from "@/services/firebase-config";
+import { Button } from "@/components/ui";
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
@@ -41,12 +42,7 @@ export default function Dashboard() {
         </p>
       )}
 
-      <button
-        onClick={handleLogout}
-        className="py-2 px-4 bg-red-600 text-white rounded"
-      >
-        Sair
-      </button>
+      <Button text="Sair" variant="destructive" onClick={handleLogout} />
     </div>
   );
 }
