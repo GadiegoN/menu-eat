@@ -5,12 +5,30 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --primary: #2563eb;
+  --secondary: #1e40af;
+  --accent: #facc15;
+
+  --success: #2f855a;
+  --danger: #d62828;
+  --warning: #d97706;
+  --info: #2b6cb0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --primary: #3b82f6;
+    --secondary: #1e3a8a;
+    --accent: #eab308;
+
+    --success: #2f855a;
+    --danger: #d62828;
+    --warning: #d97706;
+    --info: #2b6cb0;
   }
 }
 
