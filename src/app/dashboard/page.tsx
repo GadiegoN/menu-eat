@@ -3,9 +3,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/auth-context";
-import { signOut } from "firebase/auth";
-import { auth } from "@/services/firebase-config";
-import { Button } from "@/components/ui";
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
@@ -16,15 +13,6 @@ export default function Dashboard() {
       router.push("/auth/login");
     }
   }, [user, loading, router]);
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      router.push("/auth/login");
-    } catch (err) {
-      console.error("Erro ao sair", err);
-    }
-  };
 
   if (loading || !user) return <div>Carregando...</div>;
 
@@ -41,8 +29,6 @@ export default function Dashboard() {
           página.
         </p>
       )}
-
-      <Button text="Sair" variant="destructive" onClick={handleLogout} />
     </div>
   );
 }
