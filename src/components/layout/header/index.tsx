@@ -15,13 +15,11 @@ export default function Header() {
       </Link>
 
       {user ? (
-        <div className="w-1/12">
-          <Button
-            onClick={() => auth.signOut()}
-            text="Sair"
-            variant="destructive"
-          />
-        </div>
+        <Button
+          onClick={() => auth.signOut()}
+          text="Sair"
+          variant="destructive"
+        />
       ) : (
         <Link
           href="/auth/login"

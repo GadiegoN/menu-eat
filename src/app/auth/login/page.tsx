@@ -47,7 +47,7 @@ export default function Login() {
           className="w-full placeholder:text-slate-600 text-slate-950 mb-4 p-2 border rounded"
           required
         />
-        <Button text="Entrar" variant="outline" />
+        <Button className="w-full" text="Entrar" variant="outline" />
       </form>
     </div>
   );

@@ -17,7 +17,7 @@ export default function Button({
   return (
     <button
       className={clsx(
-        "p-4 flex flex-1 justify-center items-center h-12 w-full rounded-lg shadow-md transition-all",
+        "p-4 flex justify-center font-semibold items-center h-12 min-w-20 rounded-lg shadow-md transition-all",
         {
           "bg-primary text-white hover:bg-secondary hover:scale-105":
             variant === "primary",
