@@ -21,9 +21,15 @@ export const getMenusByUser = async (userId: string): Promise<Menu[]> => {
   });
 };
 
-export const addMenu = async (menu: Omit<Menu, "id">) => {
+export const addMenu = async (
+  menu: Omit<Menu, "id">,
+  userId: string
+): Promise<void> => {
   const menusRef = collection(db, "menus");
-  await addDoc(menusRef, menu);
+  await addDoc(menusRef, {
+    ...menu,
+    ownerId: userId,
+  });
 };
 
 export const getMenus = async (): Promise<Menu[]> => {

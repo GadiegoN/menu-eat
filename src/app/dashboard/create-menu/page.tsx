@@ -3,19 +3,24 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addMenu } from "@/services/menu-service";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function CreateMenuPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!name.trim()) return alert("O nome do cardápio é obrigatório!");
 
+    if (!user)
+      return alert("Você precisa estar logado para criar um cardápio!");
+
     try {
-      await addMenu({ name, description });
+      await addMenu({ name, description }, user.uid);
       router.push("/dashboard");
     } catch (error) {
       console.error("Erro ao criar cardápio:", error);

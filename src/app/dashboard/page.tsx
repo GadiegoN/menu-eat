@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../contexts/auth-context";
 import Link from "next/link";
-import { getMenus } from "@/services/menu-service";
+import { getMenusByUser } from "@/services/menu-service";
 import { Menu } from "@/@types/menu";
 import { Button } from "@/components/ui";
 
@@ -22,7 +22,9 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchMenus = async () => {
       if (user) {
-        const fetchedMenus = await getMenus();
+        console.log("Buscando cardápios para o usuário:", user.uid);
+        const fetchedMenus = await getMenusByUser(user.uid);
+        console.log("Cardápios encontrados:", fetchedMenus);
         setMenus(fetchedMenus);
       }
     };
@@ -33,14 +35,20 @@ export default function Dashboard() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-semibold">Dashboard</h1>
-      <h2 className="mt-2">Bem-vindo, {user.displayName || "Usuário"}!</h2>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-semibold">Dashboard</h1>
+          <h2 className="mt-2 text-gray-400">
+            Bem-vindo, {user.displayName || "Usuário"}!
+          </h2>
+        </div>
 
-      <Link href="/dashboard/create-menu">
-        <Button text="Criar Cardápio" />
-      </Link>
+        <Link href="/dashboard/create-menu">
+          <Button text="Criar Cardápio" />
+        </Link>
+      </div>
 
-      <h3 className="mt-6 text-2xl">Cardápios Criados</h3>
+      <h3 className="mt-6 text-2xl">Seus Cardápios</h3>
       <ul className="mt-4 space-y-4">
         {menus.map((menu) => (
           <li
