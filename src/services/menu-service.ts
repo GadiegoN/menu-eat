@@ -1,5 +1,13 @@
 import { Menu } from "@/@types/menu";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { db } from "./firebase-config";
 
 export const getMenusByUser = async (userId: string): Promise<Menu[]> => {
@@ -29,4 +37,15 @@ export const getMenus = async (): Promise<Menu[]> => {
     } as Menu);
   });
   return menus;
+};
+
+export const getMenuById = async (menuId: string): Promise<Menu | null> => {
+  const menuRef = doc(db, "menus", menuId);
+  const menuSnap = await getDoc(menuRef);
+
+  if (menuSnap.exists()) {
+    return { id: menuSnap.id, ...menuSnap.data() } as Menu;
+  } else {
+    return null;
+  }
 };
