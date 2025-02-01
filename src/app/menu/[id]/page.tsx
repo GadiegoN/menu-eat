@@ -1,34 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { getMenuById } from "@/services/menu-service";
 import { Menu } from "@/@types/menu";
 
-export default function MenuPage() {
+export default function MenuDetailPage() {
   const params = useParams();
-  const id = Array.isArray(params?.id) ? params.id[0] : params?.id;
+  const id = params ? params.id : null;
   const [menu, setMenu] = useState<Menu | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMenu = async () => {
       if (id) {
-        const fetchedMenu = await getMenuById(id);
-        setMenu(fetchedMenu);
+        try {
+          const fetchedMenu = await getMenuById(id as string);
+          setMenu(fetchedMenu);
+        } catch (error) {
+          console.error("Erro ao carregar cardápio:", error);
+          alert("Erro ao carregar os detalhes do cardápio.");
+        } finally {
+          setLoading(false);
+        }
       }
-      setLoading(false);
     };
+
     fetchMenu();
   }, [id]);
 
   if (loading) return <div>Carregando...</div>;
+
   if (!menu) return <div>Cardápio não encontrado.</div>;
 
   return (
-    <div className="min-h-screen p-6 bg-white dark:bg-gray-900">
+    <div className="p-6">
       <h1 className="text-3xl font-semibold">{menu.name}</h1>
-      <p className="text-gray-600">{menu.description}</p>
+      <p className="mt-2 text-gray-400">{menu.description}</p>
     </div>
   );
 }

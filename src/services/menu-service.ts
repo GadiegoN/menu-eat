@@ -45,13 +45,13 @@ export const getMenus = async (): Promise<Menu[]> => {
   return menus;
 };
 
-export const getMenuById = async (menuId: string): Promise<Menu | null> => {
-  const menuRef = doc(db, "menus", menuId);
-  const menuSnap = await getDoc(menuRef);
+export const getMenuById = async (id: string): Promise<Menu> => {
+  const menuRef = doc(db, "menus", id);
+  const menuDoc = await getDoc(menuRef);
 
-  if (menuSnap.exists()) {
-    return { id: menuSnap.id, ...menuSnap.data() } as Menu;
-  } else {
-    return null;
+  if (!menuDoc.exists()) {
+    throw new Error("Cardápio não encontrado");
   }
+
+  return { id: menuDoc.id, ...menuDoc.data() } as Menu;
 };

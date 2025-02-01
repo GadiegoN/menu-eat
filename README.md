@@ -89,13 +89,13 @@ Agora o projeto estará disponível no `http://localhost:3000`.
   - Função para adicionar um novo cardápio ao Firebase associando ao usuário logado.
 
 - [x] **Correção de Problemas no Banco de Dados:**
+
   - Remoção dos cardápios criados antes da atualização, para garantir que apenas os novos cardápios apareçam na listagem.
 
+- [x] **Página de Detalhes do Cardápio:**
+  - Implementada a visualização dos detalhes de um cardápio selecionado no Dashboard, com o nome e a descrição do cardápio.
+
 ## Próximos Passos
-
-- [ ] **Ver a Página de Detalhes do Cardápio:**
-
-  - Criar a página para visualizar o cardápio completo com todos os detalhes.
 
 - [ ] **Editar Cardápio:**
 
